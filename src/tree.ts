@@ -32,6 +32,9 @@ export function buildTree(data: string) {
         } else if (char === ' ') {
             //
         } else {
+            if (Number.isNaN(parseInt(char, 10))) {
+                throw new Error('Invalid input');
+            }
             while (!Number.isNaN(parseInt(input[i + 1], 10))) {
                 i++;
                 char = `${char}${input[i]}`;
