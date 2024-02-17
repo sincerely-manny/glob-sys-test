@@ -12,31 +12,43 @@ form.addEventListener('submit', (event) => {
 
     const input = form.querySelector<HTMLInputElement>('#tree-data');
 
-    if (!input) {
-        throw new Error('Input not found');
+    const errors = document.querySelector<HTMLDivElement>('#errors');
+    if (errors) {
+        errors.innerHTML = '';
     }
 
-    const treeData = input.value.trim();
+    try {
+        if (!input) {
+            throw new Error('Input not found');
+        }
 
-    if (!treeData) {
-        throw new Error('Tree not found');
-    }
+        const treeData = input.value.trim();
 
-    const { tree, offsets } = buildTree(treeData);
-    const treeStr = drawTree(tree, offsets);
-    const cont = document.querySelector<HTMLDivElement>('#tree-container');
-    if (!cont) {
-        throw new Error('Container not found');
-    }
+        if (!treeData) {
+            throw new Error('Tree data not found');
+        }
 
-    const parent = cont.parentElement;
-    if (parent) {
-        parent.style.height = `${parent.clientHeight}px`;
-    }
+        const { tree, offsets } = buildTree(treeData);
+        const treeStr = drawTree(tree, offsets);
+        const cont = document.querySelector<HTMLDivElement>('#tree-container');
+        if (!cont) {
+            throw new Error('Container not found');
+        }
 
-    cont.innerHTML = treeStr;
+        const parent = cont.parentElement;
+        if (parent) {
+            parent.style.height = `${parent.clientHeight}px`;
+        }
 
-    if (parent) {
-        parent.style.height = `${cont.clientHeight}px`;
+        cont.innerHTML = treeStr;
+
+        if (parent) {
+            parent.style.height = `${cont.clientHeight}px`;
+        }
+    } catch (e) {
+        // console.error(e);
+        if (errors && e instanceof Error) {
+            errors.innerHTML = e.message;
+        }
     }
 });
