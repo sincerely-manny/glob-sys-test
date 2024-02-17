@@ -23,5 +23,7 @@ module.exports = {
         quotes: ['error', 'single'],
         indent: ['error', 4],
         '@typescript-eslint/indent': ['error', 4],
+        'no-plusplus': ['off'],
+        'no-restricted-syntax': ['off'],
     },
 };
